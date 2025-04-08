@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>{{ assignment.title }}</h1>
+    <p><strong>Course:</strong> {{ assignment.course }}</p>
+    <p><strong>Due Date:</strong> {{ assignment.due_date }}</p>
+    <p><strong>Priority:</strong> <span class="{% if assignment.priority == 'high' %}priority-high{% elif assignment.priority == 'medium' %}priority-medium{% else %}priority-low{% endif %}">{{ assignment.get_priority_display }}</span></p>
+    <p><strong>Description:</strong> {{ assignment.description|default:"No description provided." }}</p>
+    <p><strong>Status:</strong> {% if assignment.completed %} <span class="badge badge-success">Completed</span> {% else %} <span class="badge badge-warning">Pending</span> {% endif %}</p>
+
+    <a href="{% url 'assignments:assignment_update' assignment.id %}" class="btn btn-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
+    <a href="{% url 'assignments:assignment_delete' assignment.id %}" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
+    <a href="{% url 'assignments:assignment_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to List</a>
+{% endblock %}
